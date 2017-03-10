@@ -1,0 +1,252 @@
+\documentclass{beamer}
+
+\usetheme{Luebeck}
+\usecolortheme{crane}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{План раздела \textnumero\thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\setbeamerfont{block title}{size=\footnotesize}
+
+\usepackage{polyglossia} 		                    % Поддержка многоязычности
+\usepackage{fontspec}                             % TrueType-шрифты
+
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\defaultfontfeatures{Ligatures=TeX, Mapping=tex-text}
+\setmainfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSerif-Bold,
+    ItalicFont = PTSerif-Italic,
+    BoldItalicFont = PTSerif-BoldItalic
+]{PTSerif-Regular}
+\setsansfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSans-Bold,
+    ItalicFont = PTSans-Italic
+]{PTSans-Regular}
+\setmonofont[
+    Path = fonts/,
+    Extension = .ttf
+]{PTMono-Regular}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathcomp}
+
+%\usepackage{nicefrac}
+\usepackage[noend]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstdefinestyle{mycode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!40!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+}
+
+\lstset{escapechar=@,style=mycode}
+
+\title{Лекция \textnumero 3: Принцип обобщения. Нечёткие отношения}
+\subtitle{Основы теории нечётких множеств}
+\author{Казарян Д.Э.\\{\footnotesize\textcolor{gray}{~ст.~преподаватель}}}
+\institute{РУДН, Инженерная академия\\Департамент механики и мехатроники}
+\date{9 марта 2017 г.}
+
+\begin{document}
+\lstset{language=python}
+
+\frame{\titlepage}
+
+\section{Принцип обобщения}
+
+\begin{frame}\frametitle{Определение принципа обобщения}
+    \begin{definition}
+        Пусть $X = X_1 \times X_2 \times \dots X_r$, и $\tilde{A}_1, \dots, \tilde{A}_r$ -- нечёткие множества на них, а $f: X \to Y$ (т.\,е. $y = f(x_1,\dots,x_r)$). Согласно \textit{принципу обобщения} возможно задать нечёткое множество $\tilde{B}$ на $Y$:
+        \[
+            \tilde{B} = \left\{ (y, \mu_{\tilde{B}}(y))\ |\ y = f(x_1,\dots,x_r),\ x_1,\dots,x_r \in X \right\},
+        \]
+        где
+        \[
+            \mu_{\tilde{B}}(y) = \begin{cases}
+                                    \sup\limits_{x_1,\dots,x_r\in f^{-1}(y)}{\min{\left\{ \mu_{\tilde{{A}_1}}(x_1), \dots, \mu_{\tilde{{A}_r}}(x_r) \right\}}} & \textrm{if}\ f^{-1}(x) \neq \emptyset \\
+                                    0 & otherwise
+                                 \end{cases}
+        \]
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Принцип обобщения при $r=1$}
+    При $r=1$
+    \[
+         \tilde{B} = f(\tilde{A}) =  \left\{ (y, \mu_{\tilde{B}}(y))\ |\ y = f(x),\ x \in X \right\}
+    \]
+    где
+        \[
+            \mu_{\tilde{B}}(y) = \begin{cases}
+                                    \sup\limits_{x \in f^{-1}(y)}{\mu_{\tilde{{A}}}(x)} & \textrm{if}\ f^{-1}(x) \neq \emptyset \\
+                                    0 & otherwise
+                                 \end{cases}
+        \]
+\end{frame}
+
+\begin{frame}\frametitle{Пример принципа обобщения}
+    Пусть
+    \begin{equation*}
+        \begin{align}
+            & \tilde{A} = \left\{ (-1, 0.5), (0, 0.8), (1, 1), (2, 0.4) \right\}$ \\
+            & f(x) = x^2
+        \end{align}
+    \end{equation*}
+    тогда
+    \[
+        \tilde{B} = f(\tilde{A}) = \left\{ (0, 0.8), (1, 1), (4, 0.4) \right\}$
+    \]
+\end{frame}
+
+\subsection{Операции над нечёткими множествами типа 2}
+
+\begin{frame}\frametitle{Нечёткие множества типа 2}
+    Заданы 
+        \begin{equation*}
+        \begin{align}
+            \tilde{A}(x) &= \left\{x, \mu_{\tilde{A}}(x) \right\} \\
+            \tilde{B}(x) &= \left\{x, \mu_{\tilde{A}}(x) \right\}
+        \end{align}
+    \end{equation*}
+    где
+    \begin{equation*}
+        \begin{align}
+            \mu_{\tilde{A}}(x) &= \left\{ (u_i, \mu_{u_i}(x))\ |\ x \in X,\ u_i, \mu_{u_i}(x) \in \left[0, 1\right] \right\} \\
+            \mu_{\tilde{B}}(x) &= \left\{ (v_i, \mu_{v_i}(x))\ |\ x \in X,\ v_i, \mu_{v_i}(x) \in \left[0, 1\right] \right\}
+        \end{align}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}\frametitle{Объединение нечётких множеств типа 2}
+    \[
+        \mu_{\tilde{A} \cup \tilde{B}}(x) = \left\{ (w, \mu_{\tilde{A} \cup \tilde{B}}(w))\ |\ \max\left\{ u_i, v_j \right\}, u_i, v_j \in \left[0, 1\right] \right\}
+    \]
+    где
+    \[
+        \mu_{\tilde{A} \cup \tilde{B}}(w) = \sup\limits_{w=\max{ \left\{u_i, v_i \right\} }}{ \left\{ \mu_{u_i}(x), \mu_{v_i}(x) \right\} }
+    \]
+\end{frame}
+
+\begin{frame}\frametitle{Пересечение нечётких множеств типа 2}
+    \[
+        \mu_{\tilde{A} \cap \tilde{B}}(x) = \left\{ (w, \mu_{\tilde{A} \cap \tilde{B}}(w))\ |\ \min\left\{ u_i, v_j \right\}, u_i, v_j \in \left[0, 1\right] \right\}
+    \]
+    где
+    \[
+        \mu_{\tilde{A} \cap \tilde{B}}(w) = \sup\limits_{w=\min{ \left\{u_i, v_i \right\} }}{ \left\{ \mu_{u_i}(x), \mu_{v_i}(x) \right\} }
+    \]
+\end{frame}
+
+\begin{frame}\frametitle{Дополнение для нечёткого множества типа 2}
+    \[
+         \mu_{\textcent \tilde A}(x) = \left\{ \left[ 1 - u_i, \mu_{\tilde A}(u_i) \right] \right\}
+    \]
+\end{frame}
+
+\subsection{Алгебраические операции над нечёткими числами}
+
+\begin{frame}\frametitle{Определение нечёткого числа}
+    \begin{definition}
+        \textit{Нечётким числом} $\tilde{M}$ называется выпуклое нормированное множество $\tilde{M}$ на $\mathbb{R}$ такое, что:
+        \begin{enumerate}
+            \item $\exists ! x_0: \mu_{\tilde{M}}(x_0) = 1$ ($x_0$ называется средним значением $\tilde{M}$)
+            \item $\mu_{\tilde{M}}(x)$ кусочно непрерывна
+        \end{enumerate}
+    \end{definition}
+    Зачастую это определение модифицируют (см., например, числа с трапецеидальной функцией принадлежности)
+    \begin{definition}
+        Нечёткое числом $\tilde{M}$ является \textit{положительным (отрицательным)}, если $\mu_{\tilde{M}}(x) = 0б\ \forall x < 0\ (\forall x > 0)$ 
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Возрастающие и убывающие бинарные операторы}
+    \begin{definition}
+        \textit{Возрастающим (убывающим)} бинарным оператором $*$ на $\mathbb{R}$ называется такой оператор, что если $x_1 > y_1$ и $x_2 > y_2$, то $x_1 * x_2 > y_1 * y_2$ ($x_1 * x_2 < y_1 * y_2$)
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Принцип расширения для бинарных операторов}
+    \begin{theorem}
+        Пусть $\tilde{M}, \tilde{N}$ --- нечёткие числа с непрерывными сюръективными функциями принадлежности $\mu_{\tilde M}, \mu_{\tilde N}: \mathbb{R} \to [0, 1]$, а $*$ непрерывный возрастающий (убывающий) бинарный оператор, тогда $\tilde{M} \circledast \tilde{N}$ --- нечёткое число с непрерывной сюръективной функцией принадлежности $\mu_{\tilde{M} \circledast \tilde{N}}: \mathbb{R} \to [0, 1]$
+    \end{theorem}
+    
+    \begin{theorem}
+        Пусть $\tilde{M}, \tilde{N} \in{F(\mathbb{R}})$ --- нечёткие числа с непрерывными функциями принадлежности, тогда применение принципа обобщения $*: \mathbb{R} \circledast \mathbb{R} \to \mathbb{R}$ даёт функцию принадлежности числа $\tilde{M} \circledast \tilde{N}$ вида  $\mu_{\tilde{M} \circledast \tilde{N}} = \sup_{z=x*y}\min{\left\{ \mu_{\tilde{M}}(x), \mu_{\tilde{N}}(y) \right\}}$
+    \end{theorem}
+    
+    \textbf{Замечание} Если оператор $*$ коммутативен (ассоциативен), то и $\circledast$ коммутативен (ассоциативен).
+    
+\end{frame}
+
+\section{Нечёткие отношения}
+
+\begin{frame}\frametitle{Определение нечёткого отношения}
+    \begin{definition}
+        Пусть $X, Y \subseteq \mathbb{R}$, тогда
+        \[
+            \tilde{R} = \left\{(x, y), \mu_{\tilde{R}}(x, y)\ |\ (x,y) \in X \times Y\right\}
+        \]
+        называется \textit{нечётким отношением} на $X \times Y$
+    \end{definition}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Определение нечёткого отношения (II)}
+    \begin{definition}
+        Пусть $X, Y \subset \mathbb{R}$ и
+        \begin{equation*}
+            \begin{align}
+                \tilde{A} &= \left\{ (x, \mu_{\tilde{A}}(x))\ |\ x \in X \right\} \\
+                \tilde{B} &= \left\{ (y, \mu_{\tilde{B}}(y))\ |\ y \in Y \right\}
+            \end{align}
+        \end{equation*}
+        тогда $\tilde{R}$ называется нечётким отношением, если
+        \begin{equation*}
+            \begin{align}
+                \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{A}}(x),\ \forall (x,y) \in X \times Y \\
+                \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{B}}(y),\ \forall (x,y) \in X \times Y
+            \end{align}
+        \end{equation*}
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{$\max$-$\min$ композиция}
+    \begin{definition}
+        Пусть $\tilde{R}_1(x,y)$ и $\tilde{R}_2(x,y)$ --- нечёткие отношения, тогда $\max$-$\min$ композицией называется нечёткое множество
+        \begin{equation*}
+            \begin{align}
+            \tilde{R}_1 \circ \tilde{R}_2 =& \left\{\left[ (x, z), \max_{y}\{\min\{ \mu_{\tilde{R}_1}(x, y), \mu_{\tilde{R}_2}(y, z) \}\} \right] \\
+                                           & |\ x \in X, y\in Y, z \in Z  \right\}
+            \end{align}
+        \end{equation*}
+            
+        \]
+
+    \end{definition}
+\end{frame}
+
+
+\end{document}

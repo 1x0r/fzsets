@@ -1,0 +1,306 @@
+\documentclass{beamer}
+
+\usetheme{Luebeck}
+\usecolortheme{crane}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{План раздела \textnumero\thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\setbeamerfont{block title}{size=\footnotesize}
+
+\usepackage{polyglossia} 		                    % Поддержка многоязычности
+\usepackage{fontspec}                             % TrueType-шрифты
+
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\defaultfontfeatures{Ligatures=TeX, Mapping=tex-text}
+\setmainfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSerif-Bold,
+    ItalicFont = PTSerif-Italic,
+    BoldItalicFont = PTSerif-BoldItalic
+]{PTSerif-Regular}
+\setsansfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSans-Bold,
+    ItalicFont = PTSans-Italic
+]{PTSans-Regular}
+\setmonofont[
+    Path = fonts/,
+    Extension = .ttf
+]{PTMono-Regular}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathcomp}
+
+%\usepackage{nicefrac}
+\usepackage[noend]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstdefinestyle{mycode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!40!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+}
+
+\lstset{escapechar=@,style=mycode}
+
+\title{Лекция \textnumero 2: Типы нечётких множеств. Нормы}
+\subtitle{Основы теории нечётких множеств}
+\author{Казарян Д.Э.\\{\footnotesize\textcolor{gray}{~ст.~преподаватель}}}
+\institute{РУДН, Инженерная академия\\Департамент механики и мехатроники}
+\date{2 марта 2017 г.}
+
+\begin{document}
+\lstset{language=python}
+
+\frame{\titlepage}
+
+\section{Типы нечётких множеств}
+
+\begin{frame}\frametitle{Нечёткое множество типа $m$}
+
+    Рассмотренные выше нечёткие множества c чёткими функциями принадлежности называются нечёткими множествами \textit{типа 1}.
+    
+    \begin{definition}
+        Нечётким множеством \textit{типа $m$} называется нечёткое множество на множестве $X$, значения функции принадлежности которого являются нечётким множеством типа $m-1$, $m > 1$ на интервале $[0, 1]$.
+    \end{definition}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Вероятностное нечёткое множество}
+
+    \begin{definition}
+        \textit{Вероятностным} нечётким множеством называется нечёткое множество $A$ на множестве $X$ с функцией принадлежности
+        \[
+            \mu_A : X \times \Omega \ni (x, \omega) \to \mu_A(x, \omega) \in \Omega_C
+        \]
+    \end{definition}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Интуиционистское нечёткое множество}
+
+    \begin{definition}
+        \textit{Интуиционистским} нечётким множеством называется нечёткое множество $A$ на множестве $X$, состоящее из трёхэлементных кортежей
+        \[
+            A = \left\{ \left(x, \mu_A(x), v_A(x)\right)\ |\ x \in X \right\}
+        \],
+        где $v_A(x)$ -- функция, показывающая степень непрнадлежности, причём
+        \[
+            0 \leq \mu_A(x) + v_A(x) \leq 1
+        \]
+    \end{definition}
+    
+\end{frame}
+
+\section{Операции над нечёткими множествами}
+
+\subsection{$t$-норма и $t$-конорма ($s$-норма)}
+
+\begin{frame}\frametitle{$t$-норма}
+    
+    \begin{definition}
+        \textit{$t$-нормой} называется коммутативная, ассоциативная, монотонная двузначная функция $[0, 1] \times [0, 1] \to [0, 1]$, удовлетворяющая условиям:
+        \begin{enumerate}
+            \item $t(0,0) = 0$; $t(\mu_{\tilde{A}}(x), 1) = t(1, \mu_{\tilde{A}}(x)) = \mu_{\tilde{A}}(x),\ x \in X$
+            \item $t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) \leq t(\mu_{\tilde{C}}(x), \mu_{\tilde{D}}(x))$, если $t(\mu_{\tilde{A}}(x)) \leq t(\mu_{\tilde{C}}(x))$ и $t(\mu_{\tilde{B}}(x)) \leq t(\mu_{\tilde{D}}(x))$
+            \item $t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = t(\mu_{\tilde{B}}(x), \mu_{\tilde{A}}(x))$
+            \item $t(\mu_{\tilde{A}}(x), t(\mu_{\tilde{B}}(x), \mu_{\tilde{C}}(x))) = t(t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)), \mu_{\tilde{C}}(x)))$
+        \end{enumerate}
+    \end{definition}
+    
+    $t$-норма описывает класс функций пересечения для нечётких множеств.
+\end{frame}
+
+\begin{frame}\frametitle{$t$-конорма ($s$-норма)}
+    
+    \begin{definition}
+        \textit{$t$-конормой ($s$-нормой)} называется коммутативная, ассоциативная, монотонная двузначная функция $[0, 1] \times [0, 1] \to [0, 1]$, удовлетворяющая условиям:
+        \begin{enumerate}
+            \item $s(1,1) = 1$; $s(\mu_{\tilde{A}}(x), 0) = s(0, \mu_{\tilde{A}}(x)) = \mu_{\tilde{A}}(x),\ x \in X$
+            \item $s(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) \leq s(\mu_{\tilde{C}}(x), \mu_{\tilde{D}}(x))$, если $s(\mu_{\tilde{A}}(x)) \leq s(\mu_{\tilde{C}}(x))$ и $s(\mu_{\tilde{B}}(x)) \leq s(\mu_{\tilde{D}}(x))$
+            \item $s(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = s(\mu_{\tilde{B}}(x), \mu_{\tilde{A}}(x))$
+            \item $s(\mu_{\tilde{A}}(x), s(\mu_{\tilde{B}}(x), \mu_{\tilde{C}}(x))) = s(s(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)), \mu_{\tilde{C}}(x)))$
+        \end{enumerate}
+    \end{definition}
+    
+    $t$-конорма описывает класс функций объединения для нечётких множеств.
+\end{frame}
+
+\begin{frame}\frametitle{Связь $t$- и $s$-нормы}
+    
+    \begin{itemize}
+        \item $t$- и $s$-норма логически дуальны:
+        \[
+            t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 1 - s(1 - \mu_{\tilde{A}}(x), 1 - \mu_{\tilde{B}}(x)))
+        \]
+        \item Обобщение законов де Моргана, если определить оператор дополнения как $n(\mu_{\tilde{A}}) = 1 - \mu_{\tilde{A}}$
+        \begin{cases}
+            s(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) &= n(t(n(\mu_{\tilde{A}}(x)), n(\mu_{\tilde{B}}(x)))) \mathrm{and} \\
+            t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) &= n(s(n(\mu_{\tilde{A}}(x)), n(\mu_{\tilde{B}}(x)))), x \in X
+        \end{cases}
+        \]
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Непараметрические $t$- и $s$-нормы}
+
+\begin{frame}\frametitle{$t_w$-, $s_w$-нормы}
+    \begin{itemize}
+        \item Жёсткое произведение (drastic product):
+        \[
+            t_w(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \begin{cases}
+                    \min{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} & \mathrm{if} \max{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} = 1 \\
+                    0 & otherwise
+                \end{cases}
+        \]
+        \item  Жёсткая сумма (drastic sum):
+        \[
+            s_w(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \begin{cases}
+                    \max{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} & \mathrm{if} \min{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} = 0 \\
+                    1 & otherwise
+                \end{cases}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{$t_1$-, $s_1$-нормы}
+    \begin{itemize}
+        \item Ограниченная разность (bounded difference):
+        \[
+            t_1(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \max{\left\{0, \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - 1 \right\} }
+        \]
+        \item  Ограниченная сумма (bounded sum):
+        \[
+            s_1(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \min{\left\{1, \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) \right\} }
+        \]
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{$t_{1.5}$-, $s_{1.5}$-нормы}
+    \begin{itemize}
+        \item Произведение Эйнштейна (Einstein product):
+        \[
+            t_{1.5}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \frac{\mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)}{2 - (\mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x))}
+        \]
+        \item Сумма Эйнштейна (Einstein sum):
+        \[
+            s_{1.5}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \frac{\mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x)}{1 + \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{$t_{2}$-, $s_{2}$-нормы}
+    \begin{itemize}
+        \item Алгебраическое произведение (algebraic product):
+        \[
+            t_{2}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)
+        \]
+        \item Алгебраическая сумма (algebraic sum):
+        \[
+            s_{2}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)
+        \]
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{$t_{2.5}$-, $s_{2.5}$-нормы}
+    \begin{itemize}
+        \item Произведение Хамахера (Hamacher product):
+        \[
+            t_{2.5}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
+                \frac{\mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)}{(\mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x))}
+        \]
+        \item Сумма Хамахера (Hamacher sum):
+        \[
+            s_{2.5}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \frac{\mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - 2 \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)}{1 - \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{$t_{3}$-, $s_{3}$-нормы}
+    \begin{itemize}
+        \item Минимум (minimum):
+        \[
+            t_{3}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \min{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}}
+        \]
+        \item Максимум (maximum):
+        \[
+            s_{3}(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = \max{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Отношение между непараметрическими нормами}
+    \begin{itemize}
+        \item Отношение между $t$-нормами:
+        \[
+            t_{w} \leq t_1 \leq t_{1.5} \leq t_2 \leq t_{2.5} \leq t_3
+        \]
+        \item Отношение между $s$-нормами:
+        \[
+            s_{3} \leq s_{2.5} \leq s_{2} \leq s_{1.5} \leq s_{1} \leq s_w
+        \]
+    \end{itemize}
+\end{frame}
+
+\subsection{Параметрические $t$- и $s$-нормы}
+
+\begin{frame}\frametitle{Пересечение и объединение по Хамахеру}
+
+    \begin{itemize}
+        \item Пересечение по Хамахеру:
+        \[
+            \mu_{\tilde{A} \cap \tilde{B}}(x) = \frac{\mu_{\tilde{A}}(x) \mu_{\tilde{B}}(x)}{\gamma + (1-\gamma)(\mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x) - \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x))},\ \gamma \geq 0
+        \]
+        \item Объединение по Хамахеру:
+        \[
+            \mu_{\tilde{A} \cup \tilde{B}}(x) = \frac{(1-\gamma')\mu_{\tilde{A}}(x) \mu_{\tilde{B}}(x) + \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x)}{1 + \gamma' \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x))},\ \gamma \geq -1
+        \]
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Пересечение и объединение по Ягеру}
+
+    \begin{itemize}
+        \item Пересечение по Ягеру:
+        \[
+            \mu_{\tilde{A} \cap \tilde{B}}(x) = 1 - \min{ \left\{ 1, \left( (1 - \mu_{\tilde{A}}(x))^p + (1 - \mu_{\tilde{B}}(x)))^p \right)^(1/p) \right\}}, p \geq 1
+        \]
+        \item Объединение по Ягеру:
+        \[
+            \mu_{\tilde{A} \cap \tilde{B}}(x) = \min{ \left\{ 1, \left( \mu_{\tilde{A}}(x)^p + \mu_{\tilde{B}}(x))^p \right)^(1/p) \right\}}, p \geq 1
+        \]
+    \end{itemize}
+    
+\end{frame}
+
+\end{document}

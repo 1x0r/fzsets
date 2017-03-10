@@ -1,0 +1,342 @@
+\documentclass{beamer}
+
+\usetheme{Luebeck}
+\usecolortheme{crane}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{План раздела \textnumero\thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\setbeamerfont{block title}{size=\footnotesize}
+
+\usepackage{polyglossia} 		                    % Поддержка многоязычности
+\usepackage{fontspec}                             % TrueType-шрифты
+
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\defaultfontfeatures{Ligatures=TeX, Mapping=tex-text}
+\setmainfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSerif-Bold,
+    ItalicFont = PTSerif-Italic,
+    BoldItalicFont = PTSerif-BoldItalic
+]{PTSerif-Regular}
+\setsansfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSans-Bold,
+    ItalicFont = PTSans-Italic
+]{PTSans-Regular}
+\setmonofont[
+    Path = fonts/,
+    Extension = .ttf
+]{PTMono-Regular}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathcomp}
+
+%\usepackage{nicefrac}
+\usepackage[noend]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstdefinestyle{mycode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!40!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+}
+
+\lstset{escapechar=@,style=mycode}
+
+\title{Лекция \textnumero 1: Введение}
+\subtitle{Основы теории нечётких множеств}
+\author{Казарян Д.Э.\\{\footnotesize\textcolor{gray}{~ст.~преподаватель}}}
+\institute{РУДН, Инженерная академия\\Департамент механики и мехатроники}
+\date{16 февраля 2017 г.}
+
+\begin{document}
+\lstset{language=python}
+
+\frame{\titlepage}
+
+\section{Информация о курсе}
+
+\subsection{План занятий}
+
+\begin{frame}\frametitle{}
+    \begin{itemize}
+        \item \textbf{Лекции}: каждый четверг с 10:50 до 12:30, ауд.~350
+        \item \textbf{Лабораторные работы}: каждую субботу
+        \item Преподавательский состав:
+        \begin{itemize}
+            \item Лекции: Казарян~Д.\,Э.
+            \item Лабораторные работы: Андриков~Дм.\,А.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Балльно-рейтинговая система}
+
+\begin{frame}\frametitle{Распределение баллов по активностям}
+    \begin{itemize}
+        \item \textbf{Лекции}: 12 лекций по 1 баллу
+        \item \textbf{Лабораторные работы}: 8 л/р по 5 баллов
+        \item \textbf{Контрольные работы}: 2 к/р по 9 баллов
+        \item \textbf{Практический мини-проект}: 15 баллов
+        \item \textbf{Экзамен}: 15 баллов
+    \end{itemize}
+\end{frame}
+
+\section{Место теории нечётких множеств в науке}
+
+\subsection{Неопределённость в науке}
+
+\begin{frame}\frametitle{Краткая история неопределённости}
+Концептуальные представления о задачах науки и сущностях, с которыми она рабтает:
+\begin{itemize}
+    \item До XIX века: наука стремится к точности
+    \item XIX век: физики открывают законы, действующие на молекулярном уровне
+    \item XX век: 
+    \begin{itemize} 
+        \item расцвет статистических методов
+        \item \textbf{появление теории нечётких множеств (60-70-е)}
+        \item появление теории хаоса (70-е)
+    \end{itemize}
+    \item XXI век: <<большие данные>> и машинное обучение ещё больше уходят от точности
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Зачем нужна неопределённость}
+    \begin{quote}
+        Любая традиционная логика обычно предполагает использование точных символов. Поэтому она применима не к земной жизни, а лишь к воображаемому небесному существованию \\ \hfill --- Бертран Рассел, 1923
+    \end{quote}
+    \begin{quote}
+        С увеличением сложности системы наша способность делать точные и при этом значимые утверждения о её поведении уменьшается до того предела, когда точность и значимость становятся почти взаимно исключающими характеристиками \\ \hfill --- Лотфи Заде, 1973
+    \end{quote}
+\end{frame}
+
+\begin{frame}\frametitle{Зачем нужна неопределённость}
+    \begin{itemize}
+        \item Процессы и ситуации в реальном мире не всегда можно описать исключительно чёткими и детерминистическими правилами
+        \item Часто из-за отсутствия информации невозможно точно предсказать будущее системы.
+        \item Стохастическая неопределённость...
+        \begin{itemize}
+            \item ... по Колмогорову описывается частотными характеристиками
+            \item ... по Купману использует логику
+        \end{itemize}
+        \item \textit{Семантическую} неопределённость будем называть \textbf{нечёткостью}
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Теория нечётких множеств (ТНМ)}
+
+\begin{frame}\frametitle{Направления ТНМ}
+    Задачи теории нечётких множеств:
+    \begin{itemize}
+        \item расширение понятий классических направлений математики
+        \item развитие прикладных методов моделирования процессов и систем
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Цели ТНМ}
+    \begin{itemize}
+        \item Моделирование неопределённости
+        \item Обобщение классических дихотомических методов
+        \item Компактификация репрезентации
+        \item Вывод с сохранением промежуточной аргументации
+        \item Эффективное построение аппроксимаций решений
+    \end{itemize}
+\end{frame}
+
+\section{Математические основы ТНМ}
+
+\subsection{Основные определения}
+
+\begin{frame}\frametitle{Нечёткое множество}
+    \begin{definition}
+        \textit{Чётким множеством} $X$ называется набор элементов или объектов $x \in X$
+    \end{definition}
+    
+    \begin{definition}
+        \textit{Нечётким множеством} $\tilde A$ называется множество упорядоченных пар $\tilde A = \left\{ \left( x, \mu_{\tilde A}\left(x\right)\right) | x \in X \right\}$
+    \end{definition}
+    
+    Функция $\mu_{\tilde A}\left(x\right) \in [0, 1]$ называется \textit{функцией приспособленности}
+\end{frame}
+
+\begin{frame}\frametitle{Пример нечёткого множества}
+    $X = \{1, 2, \dots, 10\}$ -- чёткое множество, описывающее количство комнат в доме.
+    
+    Нечёткое множество, описывающее <<удобный дом для семьи из четырёх человек>>:
+    
+    $$\tilde A = \left\{ (1, 0.2), (2, 0.5), (3, 0.7), (4, 1.0), (5, 0.8), (6, 0.4) \right\}$$
+    
+    \hrule
+    
+    $\tilde A$ --- действительные числа, близкие к 10:
+    $$\tilde A = \left\{ (x, \mu_{\tilde A}(x))\ |\ \mu_{\tilde A}(x)) = \frac{1}{1+(x-10)^2} \right\}$$
+\end{frame}
+
+\begin{frame}\frametitle{Носитель и $\alpha$-срез нечёткого множества}
+
+    \begin{definition}
+        \textit{Носителем нечёткого множества} $\tilde A$ называется чёткое множество $S(\tilde A)$ такое, что $\forall x \in X$, $\mu_{\tilde A}(x)) > 0$
+    \end{definition}
+
+    \begin{definition}
+        \textit{$\alpha$-срезом нечёткого множества} $\tilde A$ называется чёткое множество элементов, принадлежащих $\tilde A$ не менее, чем на степень принадлежности $\alpha$:
+        $$ A_{\alpha} = \left\{ x\in X\ |\ \mu_{\tilde A}(x) \geq \alpha \right\} $$
+    \end{definition}
+    
+\end{frame}
+
+\begin{frame}\frametitle{Выпуклое нечёткое множество}
+    \begin{definition}
+        Нечёткое множество $\tilde A$ является \textit{выпуклым}, если
+        $$ \mu_{\tilde A}(\lambda x_1 + (1-\lambda) x_2) \geq \min{(\mu_{\tilde A}(x_1), \mu_{\tilde A}(x_2))},\ x_1,x_2 \in X,\ \lambda \in [0, 1] $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Мощность нечёткого множества}
+\begin{definition}
+        \textit{Мощностью} конечного нечёткого множества $\tilde A$ называется $$ |\tilde A| = \sum_{x \in X}{\mu_{\tilde A}(x)} $$
+    \end{definition}
+\end{frame}
+
+\subsection{Основные операции над нечёткими множествами}
+
+\begin{frame}\frametitle{Операции над нечёткими множествами}
+    \begin{itemize}
+        \item Пересечение $\tilde C = \tilde A \cap \tilde B$: $$ \mu_{\tilde C}(x) = \min{(\mu_{\tilde A}(x), \mu_{\tilde B}(x))},\ x \in X$$
+        \item Объединение $\tilde C = \tilde A \cup \tilde B$: $$ \mu_{\tilde C}(x) = \max{(\mu_{\tilde A}(x), \mu_{\tilde B}(x))},\ x \in X$$
+        \item Дополнение нормализованного множества $\tilde A$: $$ \mu_{\textcent \tilde A}(x) = 1 - \mu_{\tilde A}(x),\ x \in X$$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Замечания к операциям над множествами}
+\begin{itemize}
+    \item $\min$ и $\max$ --- не единственные операторы для моделирования пересечени и объединения нечётких множеств [Беллман, Гирц, 1973]
+    \item Рассмотрим утверждения $S$ и $T$, для которых заданы $\mu_S, \mu_T$
+    \item Для операторов <<И>> и <<ИЛИ>> ищутся такие функции $f$ и $g$, что
+    
+            $$ \mu_{S\ \mathrm{and}\ T} = f(\mu_S, \mu_T),$$
+    
+            $$ \mu_{S\ \mathrm{or}\ T} = g(\mu_S, \mu_T).$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Ограничения на $f$ и $g$}
+    \begin{enumerate}
+        \item $f$ и $g$ непрерывны и неубывающи на $\mu_S$ и $\mu_T$
+        \item $f$ и $g$ симметричны ($f(\mu_S,\mu_T) = f(\mu_T,\mu_S)$)
+        \item $f(\mu_S, \mu_S)$ строго возрастает на $\mu_S$ (то же для $g$)
+        \item $f(\mu_S, \mu_T) \leq \min{(\mu_S, \mu_T)}$, $g(\mu_S, \mu_T) \geq \max{(\mu_S, \mu_T)}$
+        \item $f(1, 1) = 1$, $g(0, 0) = 0$
+        \item Логически эквивалентные утверждения имеют равные значения истинности
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle{Свойства операций над нечёткими множествами}
+    \begin{enumerate}
+        \item $\mu_S \wedge \mu_T = \mu_T \wedge \mu_S$ \\ $\mu_S \vee \mu_T = \mu_T \vee \mu_S$
+        \item $(\mu_S \wedge \mu_T) \wedge \mu_U = \mu_S \wedge (\mu_T \wedge \mu_U)$ \\ $(\mu_S \vee \mu_T) \vee \mu_U = \mu_S \vee (\mu_T \vee \mu_U)$
+        \item $\mu_S \wedge (\mu_T \vee \mu_U) = (\mu_S \wedge \mu_T) \vee (\mu_S \wedge \mu_U)$ \\ $\mu_S \vee (\mu_T \wedge \mu_U) = (\mu_S \vee \mu_T) \wedge (\mu_S \vee \mu_U)$
+        \item $\mu_S \wedge \mu_T$ и $\mu_S \vee \mu_T$ непрерывно неубывают
+        \item $\mu_S \wedge \mu_S$ и $\mu_S \vee \mu_S$ строго возрастают
+        \item $\mu_S \wedge \mu_T \leq \min{ (\mu_S, \mu_T) }$ \\ $\mu_S \vee \mu_T \geq \max{ (\mu_S, \mu_T) }$
+        \item $1\wedge 1 = 1$, $0 \vee 0 = 0$
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle{Декартово произведение нечётких множеств}
+    \begin{definition}
+        Пусть $\tilde A_1, \dots, \tilde{A}_n$ --- нечёткие множества на $X_1, \dots, X_n$, тогда их декартово произведение --- это нечёткое множество на $X_1 \times \dots \times X_n$:
+        
+        $$ 
+        \mu_{(\tilde A_1, \dots, \tilde{A}_n)}(x) = \min\limits_i \left\{ \mu_{\tilde{A}_i}(x)\ |\ x = (x_1, \dots, x_n), x_i \in X_i \right\}
+        $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Возведение в степень нечётких множеств}
+    \begin{definition}
+        $m$-я степень нечёткого множества $\tilde A$ --- это нечёткое множество с функцией принадлежности:
+        
+        $$ 
+        \mu_{\tilde{A}^m}(x) = \left[ \mu_{\tilde{A}}(x) \right]^m
+        $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Алгебраическая сумма}
+    \begin{definition}
+        \textit{Алгебраической суммой} нечётких множеств $\tilde C = \tilde A + \tilde B$ называется множество
+        
+        $$ 
+        \tilde C = \left\{ x, \mu_{\tilde A + \tilde B}(x)\ |\ x \in X \right\}
+        $$
+        
+        $$ 
+        \mu_{\tilde A + \tilde B}(x) = \mu_{\tilde A}(x) + \mu_{\tilde B}(x) - \mu_{\tilde A}(x) \cdot \mu_{\tilde B}(x)
+        $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Ограниченная сумма}
+    \begin{definition}
+        \textit{Ограниченной суммой} нечётких множеств $\tilde C = \tilde A \oplus \tilde B$ называется множество
+        
+        $$ 
+        \tilde C = \left\{ x, \mu_{\tilde A \oplus \tilde B}(x)\ |\ x \in X \right\}
+        $$
+        
+        $$ 
+        \mu_{\tilde A \oplus \tilde B}(x) = \min{(1, \mu_{\tilde A}(x) + \mu_{\tilde B}(x))}
+        $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Ограниченная разность}
+    \begin{definition}
+        \textit{Ограниченной разностью} нечётких множеств $\tilde C = \tilde A \ominus \tilde B$ называется множество
+        
+        $$ 
+        \tilde C = \left\{ x, \mu_{\tilde A \oplus \tilde B}(x)\ |\ x \in X \right\}
+        $$
+        
+        $$ 
+        \mu_{\tilde A \ominus \tilde B}(x) = \max{(0, \mu_{\tilde A}(x) - \mu_{\tilde B}(x))}
+        $$
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Алгебраическое произведение}
+    \begin{definition}
+        \textit{Алгебраическим произведением} нечётких множеств $\tilde C = \tilde A \cdot \tilde B$ называется множество
+        
+        $$ 
+        \tilde C = \left\{ x, \mu_{\tilde A}(x) \cdot \mu_{\tilde B}(x)\ |\ x \in X \right\}
+        $$
+
+    \end{definition}
+\end{frame}
+
+\end{document}
