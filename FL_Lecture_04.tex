@@ -1,0 +1,187 @@
+\documentclass{beamer}
+
+\usetheme{Luebeck}
+\usecolortheme{crane}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{План раздела \textnumero\thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\setbeamerfont{block title}{size=\footnotesize}
+
+\usepackage{polyglossia} 		                    % Поддержка многоязычности
+\usepackage{fontspec}                             % TrueType-шрифты
+
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\defaultfontfeatures{Ligatures=TeX, Mapping=tex-text}
+\setmainfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSerif-Bold,
+    ItalicFont = PTSerif-Italic,
+    BoldItalicFont = PTSerif-BoldItalic
+]{PTSerif-Regular}
+\setsansfont[
+    Path = fonts/,
+    Extension = .ttf,
+    BoldFont = PTSans-Bold,
+    ItalicFont = PTSans-Italic
+]{PTSans-Regular}
+\setmonofont[
+    Path = fonts/,
+    Extension = .ttf
+]{PTMono-Regular}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathcomp}
+
+%\usepackage{nicefrac}
+\usepackage[noend]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstdefinestyle{mycode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!40!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+}
+
+\lstset{escapechar=@,style=mycode}
+
+\title{Лекция \textnumero 4: Нечёткие графы. Нечёткий математический анализ}
+\subtitle{Основы теории нечётких множеств}
+\author{Казарян Д.Э.\\{\footnotesize\textcolor{gray}{~ст.~преподаватель}}}
+\institute{РУДН, Инженерная академия\\Департамент механики и мехатроники}
+\date{23 марта 2017 г.}
+
+\begin{document}
+\lstset{language=python}
+
+\frame{\titlepage}
+
+\section{Нечёткие графы}
+
+\begin{frame}\frametitle{Нечёткий граф}
+    \begin{definition}
+        Пусть $E$ --- чёткое множество вершин. \textit{Нечёткий граф} определяется как
+        \[
+            \tilde{G}(x_i, x_j) = \left\{ \left( \left( x_i. x_j \right), \mu_{\tilde{G}}\left( x_i. x_j \right) \right)\ |\ \left( x_i. x_j \right) \in E \times E \right\}
+        \]
+    \end{definition}
+\end{frame}
+
+
+\begin{frame}\frametitle{Нечёткий подграф}
+    \begin{definition}
+        Пусть $\tilde{H}\left( x_i. x_j \right)$ --- \textit{нечёткий подграф} графа $\tilde{G}\left( x_i. x_j \right)$, если
+        \[
+            \mu_{\tilde{H}}\left( x_i. x_j \right) \leq \mu_{\tilde{G}}\left( x_i. x_j \right), \forall \left( x_i. x_j \right) \in E \times E
+        \]
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Путь в графе}
+    \begin{definition}
+        \textit{Путь} в нечётком графе $\tilde{G}(x_i, x_j)$ --- это последовательность различных вершин $x_0, x_1, \dots, x_n,\ \forall (x_i, x_j),\ \mu_{\tilde{G}} > 0$.
+    \end{definition}
+
+    \begin{itemize}
+        \item \textit{Сила пути} в нечётком графе $\tilde{G}(x_i, x_j)$ --- это $\min\left\{ \mu_{\tilde{G}}\left(x_i, x_{i+1}\right) \right\},\ i = \overline{0, i-1}$
+        \item \textit{Длина пути} -- число вершин, входящих в путь.
+        \item \textit{Цикл} -- путь, в котором $x_0 = x_n,\ n \geq 2$
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}\frametitle{$\mu$-длина и $\mu$-расстояние}
+    \begin{definition}
+        \textit{$\mu$-длина} пути в нечётком графе --- это
+        \[
+            L(p) = \sum_{i=0}^{n-1}\frac{1}{\mu(x_i, x_{i+1})}
+        \]
+    \end{definition}
+    
+    \begin{definition}
+        \textit{$\mu$-расстояние} $d(x_i, x_j)$ между двумя узлами $x_i, x_j$ --- это наименьшая $\mu$-длина пути среди всех путей между $x_i, x_j$:
+        \[
+            d(x_i, x_j) = \min_p L(p),\ \forall p = x_i, \dots, x_j
+        \]
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Лес}
+    \begin{itemize}
+        \item Два узла называются \textit{связанными}, если между ними существует путь
+        \item Нечёткий граф называется \textit{лесом}, если в нём нет циклов
+        \item Связный лес называется \textit{деревом}
+    \end{itemize}
+
+\end{frame}
+
+\section{Нечёткий математический анализ}
+
+\begin{frame}\frametitle{Нечёткая функция}
+    \begin{itemize}
+        \item Нечёткая функция --- это обобщение чёткой функции
+        \item Чёткая функция: $f: S \to D$
+        \item Нечёткая функция имеет степени нечёткости:
+        \begin{enumerate}
+            \item чёткое отображение нечёткого множества формирует нечёткое множество
+            \item нечёткое отображение чёткого множества (такие функции называются фаззифицирующими)
+            \item чёткая функция может обладать нечёткими свойствами
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Определения нечёткой функции}
+    \begin{definition}
+        \textit{Классическая функция} $f: X \to Y$ отображает нечёткую область определения $\tilde{A}$ на $X$ в нечёткое множество значений $\tilde{B}$ на $Y$ тогда и только тогда, когда
+        \[
+            \forall x \in X, \mu_{\tilde{B}}(f(x)) \geq \mu_{\tilde{A}}(x)
+        \]
+    \end{definition}
+    
+    \begin{definition}
+        Пусть даны пространства $X$ и $Y$, $\tilde{P}(Y)$ --- множество всех нечётких множеств на $Y$. Тогда $\tilde{f}(x): X \to \tilde{P}(Y)$ --- нечёткая функция, тогда и только тогда, когда
+        \[
+            \forall (x, y) \in X \times Y, \mu_{\tilde{f}(x)}(y) = \mu_{\tilde{P}}(x, y)
+        \]
+    \end{definition}
+\end{frame}
+
+\begin{frame}\frametitle{Максимизирующее множество}
+    \begin{definition}
+        Пусть $f: X \to \mathbb{R}$ ограничена снизу и сверху. Тогда нечёткое множество $\tilde{M} = \{ (x, \mu_{\tilde{M}}(x))\ |\ x\inX \}$,
+        \[
+            \mu_{\tilde{M}}(x) = \frac{f(x) - \mathrm{inf}(f)}{\mathrm{sup}(x) - \mathrm{inf}(f)}
+        \]
+        называется максимизирующим множеством
+    \end{definition}
+    
+\end{frame}
+\begin{frame}\frametitle{Нечёткий максимум}
+    \begin{definition}
+        Пусть $\tilde{f}: X \to \mathbb{R}$ определена на чётком множестве $D$. Тогда \textit{нечётким максимумом} $\tilde{f}(x)$ называется
+        \[
+            \tilde{M} = \max_{x \in X} \tilde{f}(x) = \{ \sup{\tilde{f}(x), \mu_{\tilde{M}}(x))\ |\ x \in D} \}
+        \]
+    \end{definition}    
+\end{frame}
+
+\end{document}

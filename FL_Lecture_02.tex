@@ -104,8 +104,8 @@
         \textit{Интуиционистским} нечётким множеством называется нечёткое множество $A$ на множестве $X$, состоящее из трёхэлементных кортежей
         \[
             A = \left\{ \left(x, \mu_A(x), v_A(x)\right)\ |\ x \in X \right\}
-        \],
-        где $v_A(x)$ -- функция, показывающая степень непрнадлежности, причём
+        \]
+        где $v_A(x)$ -- функция, показывающая степень непринадлежности, причём
         \[
             0 \leq \mu_A(x) + v_A(x) \leq 1
         \]
@@ -155,10 +155,11 @@
             t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 1 - s(1 - \mu_{\tilde{A}}(x), 1 - \mu_{\tilde{B}}(x)))
         \]
         \item Обобщение законов де Моргана, если определить оператор дополнения как $n(\mu_{\tilde{A}}) = 1 - \mu_{\tilde{A}}$
-        \begin{cases}
+        \[
+        \begin{align}
             s(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) &= n(t(n(\mu_{\tilde{A}}(x)), n(\mu_{\tilde{B}}(x)))) \mathrm{and} \\
             t(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) &= n(s(n(\mu_{\tilde{A}}(x)), n(\mu_{\tilde{B}}(x)))), x \in X
-        \end{cases}
+        \end{align}
         \]
     \end{itemize}
 
@@ -169,7 +170,7 @@
 \begin{frame}\frametitle{$t_w$-, $s_w$-нормы}
     \begin{itemize}
         \item Жёсткое произведение (drastic product):
-        \[
+        \[ \hspace*{-1cm} 
             t_w(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
                 \begin{cases}
                     \min{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} & \mathrm{if} \max{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} = 1 \\
@@ -177,7 +178,7 @@
                 \end{cases}
         \]
         \item  Жёсткая сумма (drastic sum):
-        \[
+        \[ \hspace*{-1cm} 
             s_w(\mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x)) = 
                 \begin{cases}
                     \max{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} & \mathrm{if} \min{\left\{ \mu_{\tilde{A}}(x), \mu_{\tilde{B}}(x) \right\}} = 0 \\
@@ -282,7 +283,7 @@
         \]
         \item Объединение по Хамахеру:
         \[
-            \mu_{\tilde{A} \cup \tilde{B}}(x) = \frac{(1-\gamma')\mu_{\tilde{A}}(x) \mu_{\tilde{B}}(x) + \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x)}{1 + \gamma' \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x))},\ \gamma \geq -1
+            \mu_{\tilde{A} \cup \tilde{B}}(x) = \frac{(1-\gamma')\mu_{\tilde{A}}(x) \mu_{\tilde{B}}(x) + \mu_{\tilde{A}}(x) + \mu_{\tilde{B}}(x)}{1 + \gamma' \mu_{\tilde{A}}(x) \cdot \mu_{\tilde{B}}(x)},\ \gamma' \geq -1
         \]
     \end{itemize}
     
@@ -292,12 +293,12 @@
 
     \begin{itemize}
         \item Пересечение по Ягеру:
-        \[
-            \mu_{\tilde{A} \cap \tilde{B}}(x) = 1 - \min{ \left\{ 1, \left( (1 - \mu_{\tilde{A}}(x))^p + (1 - \mu_{\tilde{B}}(x)))^p \right)^(1/p) \right\}}, p \geq 1
+        \[ \hspace*{-1cm} 
+            \mu_{\tilde{A} \cap \tilde{B}}(x) = 1 - \min{ \left\{ 1, \left( (1 - \mu_{\tilde{A}}(x))^p + (1 - \mu_{\tilde{B}}(x)))^p \right)^{1/p} \right\}}, p \geq 1
         \]
         \item Объединение по Ягеру:
         \[
-            \mu_{\tilde{A} \cap \tilde{B}}(x) = \min{ \left\{ 1, \left( \mu_{\tilde{A}}(x)^p + \mu_{\tilde{B}}(x))^p \right)^(1/p) \right\}}, p \geq 1
+            \mu_{\tilde{A} \cap \tilde{B}}(x) = \min{ \left\{ 1, \left( \mu_{\tilde{A}}(x)^p + \mu_{\tilde{B}}(x))^p \right)^{1/p} \right\}}, p \geq 1
         \]
     \end{itemize}
     

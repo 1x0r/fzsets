@@ -223,28 +223,31 @@
                 \tilde{B} &= \left\{ (y, \mu_{\tilde{B}}(y))\ |\ y \in Y \right\}
             \end{align}
         \end{equation*}
-        тогда $\tilde{R}$ называется нечётким отношением, если
+        тогда $\tilde{R}$ называется нечётким отношением на $\tilde{A}, \tilde{B}$, если
         \begin{equation*}
-            \begin{align}
-                \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{A}}(x),\ \forall (x,y) \in X \times Y \\
-                \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{B}}(y),\ \forall (x,y) \in X \times Y
-            \end{align}
+            \left\{
+                \begin{align}
+                    \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{A}}(x),\ \forall (x,y) \in X \times Y \\
+                    \mu_{\tilde{R}}(x, y) &\leq \mu_{\tilde{B}}(y),\ \forall (x,y) \in X \times Y
+                \end{align}
+            \right.
         \end{equation*}
     \end{definition}
 \end{frame}
 
 \begin{frame}\frametitle{$\max$-$\min$ композиция}
+
     \begin{definition}
         Пусть $\tilde{R}_1(x,y)$ и $\tilde{R}_2(x,y)$ --- нечёткие отношения, тогда $\max$-$\min$ композицией называется нечёткое множество
+        
         \begin{equation*}
             \begin{align}
-            \tilde{R}_1 \circ \tilde{R}_2 =& \left\{\left[ (x, z), \max_{y}\{\min\{ \mu_{\tilde{R}_1}(x, y), \mu_{\tilde{R}_2}(y, z) \}\} \right] \\
-                                           & |\ x \in X, y\in Y, z \in Z  \right\}
+               \tilde{R}_1 \circ \tilde{R}_2 = & \left\{ \left[ (x, z), \max_{y}\left\{ \min\left\{ \mu_{\tilde{R}_1}(x, y), 
+                                                           \mu_{\tilde{R}_2}(y, z) \right\} \right\} \right] \right. \\
+                & \left.\ \ \ |\ x \in X, y\in Y, z \in Z \vphantom{\int}\ \right\}
             \end{align}
         \end{equation*}
-            
-        \]
-
+        
     \end{definition}
 \end{frame}
 
